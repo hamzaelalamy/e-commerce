@@ -90,16 +90,13 @@ module.exports.filter = async(req,res,next)=>{
     let products=await Product.find()
     switch(filterType){
         case "priceAsc":
-            products=products.sort((a,b)=>(a.price-b.price)||(a.name>b.name?
-                1:-1))
-                break;
-                case "priceDesc":
+            products=products.sort((a,b)=>(a.price-b.price)||(a.name>b.name?1:-1))
+            break;
+        case "priceDesc":
                     products=products.sort((a,b) => (b.price -a.price) ||(a.name > b.name? 1 : -1));
-                break;
-                default:
+            break;
+        default:
                     products=products.sort((a,b) => (a.name.toLowerCase().localeCompare(b.name.toLowerCase)));
-                    products=products.sort((a,
-                        b) => (a.name > b.name ? 1 : -1))}
-                            res.status(200).json({message:"Filtering completed",data:products})
-                                }
+                    products=products.sort((a,b) => (a.name > b.name ? 1 : -1))}
+                    res.status(200).json({message:"Filtering completed",data:products})                                }
                                 
