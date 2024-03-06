@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 //Express routes
 // app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
-// app.use('/api/auth',authRoutes);
+app.use('/api/auth',authRoutes);
 app.use('*', (req, res) => {
     res.status(404).json({message : 'Not Found'}) });
 

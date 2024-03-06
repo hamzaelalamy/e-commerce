@@ -1,18 +1,13 @@
-const express = require('express');
-// const { signup_get, login_get, signup_post, login_post } = require('../controllers/authControllers');
+
 const router = express.Router();
-// const authController = require('../controllers/authControllers.js');
-const {body, validationResult} = require('express-validator');
-const {requireAuth} = require('../middleware/authMiddleware');
+const authController = require('../controllers/authControllers')
 
-// router.get('/signup',authController.signup_get);
-// router.get('/login', requireAuth,authController.login_get);
-
-// router.post('/signup',authController.signup_post);
-
-// router.post('/login',authController.login_post);
-
-// router.get('/logout', authController.logout);
+//router for register api
+router.route('/signup').post(authController.signup);
+// router for login
+router.route('/login').post(authController.login);
+//forgot password
+router.route('/forgotpassword').post(authController.forgotPassword);
 
 
-// module.exports = router;
+module.exports = router;
