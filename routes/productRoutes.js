@@ -26,4 +26,6 @@ router.patch('/:id', productController.patch);
 
 router.delete("/delete/:id", productController.delete);
 
+router.get('/filter?', productController.filter)
+
 module.exports = router;
