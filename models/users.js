@@ -13,18 +13,11 @@ const userSchema = new mongoose.Schema({
     },
     age: {type: Number},
     password: {type: String, required:true},
-    // confirmPassword: {
-    //     type: String,
-    //     required: [true, 'Please enter Confirm password'],
-    //     validate: {
-    //         validator: function (val) {
-    //             return val === this.password;
-    //         },
-    //         message: 'Password & Confirm Password do not match'
-    //     }
-    // },
-    role: {type:String, enum:['admin','user'],  default:'user'} ,
     photo: String,
+    role: {type:String, enum:['admin','user'],  default:'user'},  // admin or user
+    phoneNumber:{ type: String },
+    adress: {street:{ typr: String}, city: { type: String}, postalCode:{ type: String},  country:{ type: String}},
+    accountStatus: { type: String, enum: [ 'active', 'suspended', 'disabled'],  default: 'active'},
     passwordResetToken :String,
     passwordResetTokenExpires:Date,
   },

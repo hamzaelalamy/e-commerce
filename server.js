@@ -1,13 +1,12 @@
 
 //requiring environment variables
-require('dotenv').config();
 
 //requiring necessary packages
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
-
+require('dotenv').config()
 //require middelware
 const errorMiddleware = require('./middleware/errorMiddleware'); // Import error middleware
 
@@ -15,7 +14,6 @@ const errorMiddleware = require('./middleware/errorMiddleware'); // Import error
 const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
 const authRoutes = require( './routes/authRoutes' );
-
 
 //connection to the database
 mongoose.connect(process.env.DB_URL)
@@ -42,4 +40,6 @@ const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, ()=> {
     console.log( `App is listening on port ${PORT}` );
+
+console.log(process.env.DB_URL);
 })
