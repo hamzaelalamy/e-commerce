@@ -1,21 +1,6 @@
 const user = require("../models/users")
 
-module.exports.create = async (req, res, next) => {
-    try{
-        const user = new user({
-            name: req.body.name,
-            email: req.body.email,
-            age : req.body.age,
-            role : req.body.role
-        });
-        await user.save();
-        console.log('User saved successfully');
-        res.status(201).json({ message: 'User has been added', data : user })
-    }catch{
-        console.error("Error is saving a User to database", err);
-        nexr(err);
-    }
-}
+
 
 module.exports.user = async (req, res, next) =>{
     try{
@@ -29,7 +14,7 @@ module.exports.user = async (req, res, next) =>{
 };
 
 
-module.exports.patch = async (req, res, next) => {
+module.exports.modify = async (req, res, next) => {
     const id = req.params.id;
     const updateInfo = req.body;
     try {
@@ -45,4 +30,20 @@ module.exports.patch = async (req, res, next) => {
         next(err);
     }
        
+};
+
+
+module.exports.singleUser = async (req, res, next) => {
+    const id = req.params.id;
+    console.log(id);
+    try{
+        const suser = await user.findById(id);
+        console.log(suser);
+        if(!suser)
+        return res.status(404).json({ message: 'No user with this ID was found' });
+    return res.status(200).json(suser);
+    }catch (err) {
+        console.log("fdghhggh");
+        next(err);
+    }
 };
