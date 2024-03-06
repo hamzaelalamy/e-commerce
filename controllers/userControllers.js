@@ -1,38 +1,48 @@
-exports.updateUser = async (req, res, next) =>{
-    try{
-        // Mise à jour de l'utilisateur en fonction de son ID
-       const updatedUser = await User.findByIdAndUpdate (req.user._id, req.body,{new: true});
-        // Vérification si l'utilisateur est trouvé et mis à jour
-        if (!updatedUser){
-            return res.status(404).json({ message: "User not found."});
+const User = require('../models/users');
+require('dotenv').config();
+
+module.exports.getAllUsers = async (req, res) => {
+    try {
+        // Retrieve all users from the database
+        const users = await User.find({});
+
+        // Check if there are no users found
+        if (!users || users.length === 0) {
+            return res.status(404).json({ message: 'No users found' });
         }
-        
-        console.log('user Updated ', updatedUser );
-        res.status(200).json(updatedUser);
-    }catch (error){
-        // Gestion des erreurs
-        console.log('error while updating user', err);
-        next(err);
+
+        // Return the retrieved users as a response
+        res.status(200).json(users);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
     }
-    
 };
 
-exports.deleteUser = async (req, res, next) =>{
-    try{
-        // Suppression de l'utilisateur en fonction de son ID
-       const deletedUser = await User.findByIdAndDelete (req.params.id);
-       // Vérification si l'utilisateur est trouvé et supprimé
-       if (!deletedUser){
-        return res.status(404).json({ message: "User not found."});
-       }
-       
-       console.log('user deleted ', deletedUser );
-        res.status(200).json(deletedUser);
 
-    }catch (error){
-        // Gestion des erreurs
-        console.log('error while deleting user', err);
+module.exports.updateUser = async (req, res, next) => {
+    const id = req.params.id;
+    const updateInfo = req.body;
+    try {
+        const updatedUser = await User.findByIdAndUpdate(id, updateInfo, { new: true });
+        if (updatedUser) {
+            console.log("Updated product successfully");
+            res.status(200).json({ message: "Update successfully!", data: updatedUser });
+        } else {
+            res.status(404).json({ message: "No such user is present or the fields you are trying to update are incorrect." });
+        }
+    } catch (err) {
         next(err);
     }
-    
+};
+
+module.exports.delete = async (req, res, next) => {
+    const id = req.params.id;
+    try {
+        await User.findByIdAndDelete(id);
+        console.log(`${id} is deleted`);
+        res.status(200).json({ message: `${id} is deleted from our database.` });
+    } catch (err) {
+        next(err);
+    }
 };
