@@ -1,9 +1,9 @@
 // const {requireAuth} = require('../middleware/authMiddleware');
-const User  = require('../models/users');
+const User  = require('../models/users')
 const jwt  = require('jsonwebtoken');
 // const util  = require('util');
 require('dotenv').config();
-const sendEmail = require('./Utils/email');
+const sendEmail = require("../Utils/email")
 
 
 //token function
@@ -70,9 +70,10 @@ exports.login = async (req, res, next) => {
 //forgot password :
 exports.forgotPassword = async (req, res, next) => {
     try {
-        const user = await User.findOne({ email: req.body.email });
+        let emailUser = req.body.email;
+        const user = await User.findOne({ email: emailUser });
         if (!user) {
-            return res.status(404).json({ error: 'User not found', message: 'No user with this email' });
+            return res.status(404).json({ error: 'User not found', message: 'No user with this email' , test:`${sendEmail.host}` });
         }
 
         const resetToken = user.createResetPasswordToken();
